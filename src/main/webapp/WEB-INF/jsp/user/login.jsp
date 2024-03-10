@@ -23,12 +23,12 @@
 						<h2 class="text-center">Ajfqogram</h2>
 						<br>
 						
-						<from id="loginForm">
+						<form id="loginForm">
 							<input type="text" id="idInput" class="form-control mt-3" placeholder="아이디">
 							<input type="password" id="passwordInput" class="form-control mt-3" placeholder="비밀번호">
-							<button type="buttom" class="btn btn-primary btn-block mt-3">로그인</button>
+							<button type="button" class="btn btn-primary btn-block mt-3">로그인</button>
 							<hr>
-						</from>
+						</form>
 						<div class="text-center text-secondary">비밀번호를 잊으셨나요?</div>
 					</div>
 				</div>
