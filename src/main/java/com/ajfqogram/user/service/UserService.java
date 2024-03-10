@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ajfqogram.common.EncryptUtils;
+import com.ajfqogram.user.domain.User;
 import com.ajfqogram.user.repository.UserRepository;
 
 @Service
@@ -28,6 +29,12 @@ public class UserService {
 		} else {
 			return false;
 		}
+	}
+	
+	public User getUser(String loginId, String password) {
+		
+		String encryptPassword = EncryptUtils.md5(password);
+		return userRepository.selectUser(loginId, encryptPassword);
 	}
 	
 	
