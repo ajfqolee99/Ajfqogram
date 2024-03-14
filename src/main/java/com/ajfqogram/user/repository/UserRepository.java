@@ -22,5 +22,6 @@ public interface UserRepository {
 			,@Param("password") String password
 			);
 	
+	public User selectUserById(@Param("id") int id);
 	
 }
