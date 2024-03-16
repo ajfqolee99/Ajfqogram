@@ -22,7 +22,8 @@
 				<div class="input-box border rounded">
 					<textarea rows="4" class="form-control border-0" id="contentsInput"></textarea>
 					<div class="d-flex justify-content-between p-2">
-						<input type="file" id="fileInput">
+						<label for="fileInput"><i class="bi bi-image big-font" id="imageIcon"></i></label>
+						<input type="file" id="fileInput" class="d-none">
 						<button type="button" class="btn btn-info btn-sm" id="uploadInput">입력</button>
 					</div>
 				</div>
@@ -34,17 +35,17 @@
 						<!-- 카드 -->
 						<div class="card my-3">
 							<div class="d-flex justify-content-between p-2">
-								<div>${post.userId }</div>
+								<div>${post.userLoginId }</div>
 								<i class="bi bi-three-dots-vertical"></i>
 							</div>
 							<div>
 								<img class="w-100" src="${post.imagePath }">
 							</div>
 							<div class="p-2">
-								<i class="bi bi-heart"></i> 좋아요 11개						
+								<i class="bi bi-heart like-icon" data-post-id="${post.postId }"></i> 좋아요 11개						
 							</div>
 							<div class="p-2">
-								<b>${post.userId }</b> ${post.contents }
+								<b>${post.userLoginId }</b> ${post.contents }
 							</div>
 							<!-- 댓글 목록 -->
 							<div class="comment-box">
@@ -54,8 +55,8 @@
 									<div><b>jamong</b> 이쁘다</div>
 								</div>
 								<div class="d-flex justify-content-between">
-									<input type="text" class="form-control col-10">
-									<button type="button" class="btn btn-info col-2">게시</button>
+									<input type="text" class="form-control col-10" id="commentInput">
+									<button type="button" class="btn btn-info col-2 comment-btn" data-post-id ="${post.postId }">게시</button>
 								</div>
 							</div>
 							<!-- /댓글 목록 -->
@@ -80,6 +81,50 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js" integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+" crossorigin="anonymous"></script>
 <script>
 	$(document).ready(function() {
+		
+		$(".comment-btn").on("click", function() {
+			
+			let postId = $(this).data("post-id");
+			let contents = $(this)
+			
+			$.ajax({
+				type:post
+				,url:"/post/comment/create"
+				,data{"postId":postId, "contents":}
+				
+			});
+			
+		});
+		
+		$(".like-icon").on("click", function() {
+			// 이벤트가 발생한 태그 객체
+			// data-post-id
+			let postId = $(this).data("post-id");
+			let 
+			$.ajax({
+				type:"post"
+				,url:"/post/like"
+				,data:{"postId":postId}
+				,success:function(data) {
+					if(data.result == "success") {
+						location.reload();
+					} else {
+						alert("좋아요 실패");
+					}
+				}
+				,error:function() {
+					alert("좋아요 에러");
+				}
+			});
+			
+		});
+		
+		$("#imageIcon").on("click", function() {
+			
+			//$("#fileInput").click();			
+		});
+		
+		
 		$("#uploadInput").on("click", function() {
 			let contents = $("#contentsInput").val();
 			let file = $("#fileInput")[0].files[0];

@@ -36,29 +36,32 @@ public class PostService {
 		return postRepository.save(post);
 	}
 	
-	// 등록 내림 차순으로 조회된 결과를 돌려주는 기능
-	public List<PostDetail> getPostList() {
-		List<Post> postList = postRepository.findAllByOrderByIdDesc();
-		
-		List<PostDetail> postDetailList = new ArrayList<>();
-		
-		for(Post post:postList) {
-			int userId = post.getUserId();
-			User user = userService.getUserById(userId);
-			user.getLoginId();
+	// 등록 내림 차순으로 조회된 결과 돌려주는 기능
+		public List<PostDetail> getPostList() {
+			List<Post> postList = postRepository.findAllByOrderByIdDesc();
 			
-			PostDetail postDetail = PostDetail.builder()
-										.postId(post.getId())
-										.userId(userId)
-										.userLoginId(user.getLoginId())
-										.contents(post.getContents())
-										.imagePath(post.getImagePath())
-										.build();
+			List<PostDetail> postDetailList = new ArrayList<>();
 			
-			postDetailList.add(postDetail);
-		}
+			for(Post post:postList) {
+				
+				int userId = post.getUserId();
+				User user = userService.getUserById(userId);
+			
+				PostDetail postDetail = PostDetail.builder()
+											.postId(post.getId())
+											.userId(userId)
+											.userLoginId(user.getLoginId())
+											.contents(post.getContents())
+											.imagePath(post.getImagePath())
+											.build();
+				
+				postDetailList.add(postDetail);
+			}
+			
+			return postDetailList;
+			
+			
 		
-		return postDetailList;
 		
 	}
 	

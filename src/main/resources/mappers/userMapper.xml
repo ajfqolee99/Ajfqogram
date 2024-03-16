@@ -37,7 +37,8 @@
 	<select id="selectUser" parameterType="map"
 	resultType="com.ajfqogram.user.domain.User">
 		SELECT 
-			`loginId`
+			`id`
+			,`loginId`
 			,`password`
 			,`name`
 			,`email`
@@ -54,15 +55,15 @@
 	resultType="com.ajfqogram.user.domain.User">
 		SELECT 
 			`id`
-			,`loginId`
-			,`password`
-			,`name`
-			,`email`
-			,`createdAt`
-			,`updatedAt`
-		FROM 	
+			, `loginId`
+			, `password`
+			, `name`
+			, `email`
+			, `createdAt`
+			, `updatedAt`
+		FROM 
 			`user`
-		WHERE 
+		WHERE
 			`id` = #{id}
 	
 	</select>

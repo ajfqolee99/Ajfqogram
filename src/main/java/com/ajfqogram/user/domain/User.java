@@ -12,6 +12,7 @@ public class User {
 	private Date createdAt;
 	private Date updatedAt;
 	
+	
 	public int getId() {
 		return id;
 	}
@@ -54,5 +55,7 @@ public class User {
 	public void setUpdatedAt(Date updatedAt) {
 		this.updatedAt = updatedAt;
 	}
+	
+	
 
 }
