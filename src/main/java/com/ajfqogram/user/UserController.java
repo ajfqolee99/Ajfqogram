@@ -7,10 +7,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
-@Controller
 @RequestMapping("/user")
+@Controller
 public class UserController {
-	
+
 	@GetMapping("/join-view")
 	public String inputJoin() {
 		return "user/join";
@@ -29,8 +29,6 @@ public class UserController {
 		session.removeAttribute("userLoginId");
 		
 		return "redirect:/user/login-view";
-		
 	}
-	
-	
+
 }

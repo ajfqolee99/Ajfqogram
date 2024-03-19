@@ -20,12 +20,11 @@ public class CommentRestController {
 	private CommentService commentService;
 	
 	@PostMapping("/post/comment/create")
-	public Map<String, String> createComment (
+	public Map<String, String> createCommnet(
 			@RequestParam("postId") int postId
-			,@RequestParam("contents") String contents
-			, HttpSession session
-			) 
-	{
+			, @RequestParam("contents") String contents
+			, HttpSession session) {
+		
 		int userId = (Integer)session.getAttribute("userId");
 		
 		Comment comment = commentService.addComment(userId, postId, contents);
@@ -35,10 +34,12 @@ public class CommentRestController {
 		if(comment != null) {
 			resultMap.put("result", "success");
 		} else {
-			resultMap.put("result", "success");
+			resultMap.put("result", "fail");
 		}
+		
 		return resultMap;
 	}
+
 	
 	
 	

@@ -7,7 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.ajfqogram.comment.dto.CommentDetail;
+import com.ajfqogram.comment.service.CommentService;
 import com.ajfqogram.common.FileManager;
+import com.ajfqogram.like.service.LikeService;
 import com.ajfqogram.post.domain.Post;
 import com.ajfqogram.post.dto.PostDetail;
 import com.ajfqogram.post.repository.PostRepository;
@@ -20,8 +23,14 @@ public class PostService {
 	@Autowired
 	private PostRepository postRepository;
 	
-	@Autowired 
-	private UserService userService;	
+	@Autowired
+	private UserService userService;
+	
+	@Autowired
+	private LikeService likeService;
+	
+	@Autowired
+	private CommentService commentService;
 	
 	public Post addPost(int userId, String contents, MultipartFile file) {
 		
@@ -33,37 +42,44 @@ public class PostService {
 						.imagePath(filePath)
 						.build();
 		
+		
 		return postRepository.save(post);
 	}
 	
 	// 등록 내림 차순으로 조회된 결과 돌려주는 기능
-		public List<PostDetail> getPostList() {
-			List<Post> postList = postRepository.findAllByOrderByIdDesc();
+	public List<PostDetail> getPostList(int loginUserId) {
+		List<Post> postList = postRepository.findAllByOrderByIdDesc();
+		
+		List<PostDetail> postDetailList = new ArrayList<>();
+		
+		for(Post post:postList) {
 			
-			List<PostDetail> postDetailList = new ArrayList<>();
+			int userId = post.getUserId();
+			User user = userService.getUserById(userId);
+			// 좋아요 개수 조회 
+			int likeCount = likeService.getLikeCount(post.getId());
+			// 로그인한 사용자가 좋아요 했는지 여부 조회 
+			boolean isLike = likeService.isLike(loginUserId, post.getId());
+			// 댓글 목록 조회 
+			List<CommentDetail> commentList = commentService.getCommentList(post.getId());
 			
-			for(Post post:postList) {
-				
-				int userId = post.getUserId();
-				User user = userService.getUserById(userId);
+			PostDetail postDetail = PostDetail.builder()
+										.postId(post.getId())
+										.userId(userId)
+										.userLoginId(user.getLoginId())
+										.contents(post.getContents())
+										.imagePath(post.getImagePath())
+										.likeCount(likeCount)
+										.isLike(isLike)
+										.commentList(commentList)
+										.build();
 			
-				PostDetail postDetail = PostDetail.builder()
-											.postId(post.getId())
-											.userId(userId)
-											.userLoginId(user.getLoginId())
-											.contents(post.getContents())
-											.imagePath(post.getImagePath())
-											.build();
-				
-				postDetailList.add(postDetail);
-			}
-			
-			return postDetailList;
-			
-			
+			postDetailList.add(postDetail);
+		}
+		
+		return postDetailList;
 		
 		
 	}
-	
-	
+
 }

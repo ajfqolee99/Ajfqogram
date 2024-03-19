@@ -23,9 +23,9 @@ public class PostRestController {
 	@PostMapping("/post/create")
 	public Map<String, String> createPost(
 			@RequestParam("contents") String contents
-			,@RequestParam("imageFile") MultipartFile imageFile
-			,HttpSession session) 
-	{
+			, @RequestParam("imageFile") MultipartFile imageFile
+			, HttpSession session) {
+		
 		int userId = (Integer)session.getAttribute("userId");
 		
 		Post post = postService.addPost(userId, contents, imageFile);
@@ -40,6 +40,5 @@ public class PostRestController {
 		return resultMap;
 		
 	}
-	
-	
+
 }

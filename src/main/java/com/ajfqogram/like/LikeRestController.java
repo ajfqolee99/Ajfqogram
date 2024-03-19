@@ -22,8 +22,8 @@ public class LikeRestController {
 	@PostMapping("/post/like")
 	public Map<String, String> like(
 			@RequestParam("postId") int postId
-			, HttpSession session) 
-	{
+			, HttpSession session) {
+		
 		int userId = (Integer)session.getAttribute("userId");
 		
 		Like like = likeService.addLike(postId, userId);
@@ -35,8 +35,10 @@ public class LikeRestController {
 		} else {
 			resultMap.put("result", "fail");
 		}
+		
 		return resultMap;
+		
+		
 	}
-	
-	
+
 }

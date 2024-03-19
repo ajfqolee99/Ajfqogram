@@ -33,7 +33,6 @@ public class Comment {
 	@Column(name="postId")
 	private int postId;
 	
-	
 	private String contents;
 	
 	@UpdateTimestamp
@@ -43,7 +42,4 @@ public class Comment {
 	@UpdateTimestamp
 	@Column(name="updatedAt")
 	private Date updatedAt;
-	
-	
-	
 }
