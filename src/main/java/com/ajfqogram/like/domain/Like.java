@@ -29,15 +29,10 @@ public class Like {
 	
 	@Column(name="postId")
 	private int postId;
-	
 	@Column(name="userId")
 	private int userId;
 	
 	@UpdateTimestamp
 	@Column(name="createdAt")
 	private Date createdAt;
-	
-	
-	
-	
 }
